@@ -12,7 +12,7 @@ Seguir los sugientes comandos para correr el servidor
 ```
 npm i
 
-npm run dev
+npm start
 
 ```
 ### UNA VEZ EJECUTADOS ESTOS COMANDOS CORRER EL SERVIDOR EN  [localhost:3000](localhost:3000) 
