@@ -3,6 +3,7 @@ import Products from '../../dao/mongo/models/product.model.js'
 import authorization from "../../middlewares/authorization.js"
 import product_edit from "../../middlewares/product_edit.js"
 
+import {ProductImageUploader} from "../../middlewares/multer.js"
 
 import jwt from "jsonwebtoken"
 import nodemailer from "nodemailer"
@@ -62,7 +63,7 @@ router.get("/admin-delete/:productId", product_edit, async (req, res, next) => {
     }
 })
 
-router.post('/', authorization, async (req, res, next) => {
+router.post('/', authorization, ProductImageUploader.single("thumbnail"), async (req, res, next) => {
     try {
         const owner = req.user._id
         if (!owner) {
@@ -75,7 +76,7 @@ router.post('/', authorization, async (req, res, next) => {
         let title = req.body.title
         let description = req.body.description
         let price = Number(req.body.price)
-        let thumbnail = req.body.thumbnail
+        let thumbnail = req.file.filename
         let stock = Number(req.body.stock)
 
         // Ejecutar la función de añadir producto correctamente y manejar errores

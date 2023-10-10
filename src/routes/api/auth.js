@@ -13,40 +13,46 @@ import jwt from "jsonwebtoken"
 import sendMail from "../../utils/sendMail.js";
 import { sendSms, sendWhatsapp } from '../../utils/sendSms.js';
 import UserDTO from '../../dto/user.dto.js'
-import { __filename, __dirname, upload } from '../../middlewares/multer.js';
+import { upload } from '../../middlewares/multer.js';
 
 
 
 const router = Router()
 
-router.get('/mail', async (req,res)=> {
+router.get('/mail', async (req, res) => {
     await sendMail()
     res.send('Email enviado')
 })
 
-router.get('/sms', async (req,res)=> {
-    await sendSms('Nicolas', 'Lopez')       
+router.get('/sms', async (req, res) => {
+    await sendSms('Nicolas', 'Lopez')
     res.send('SMS enviado')
 })
-router.get('/whatsapp', async (req,res)=> {  
-    await sendWhatsapp('Nicolas', 'Lopez')    
+router.get('/whatsapp', async (req, res) => {
+    await sendWhatsapp('Nicolas', 'Lopez')
     res.send('SMS enviado')
 })
 
 router.post('/register',
+    upload.single('image'),
     validator_register,
     pass_is_8,
     create_hash,
-    upload.single('image'), 
     passport.authenticate(
         'register',  // nombre de la estrategia a buscar
         { failureRedirect: '' }  // objeto de configuracion de la ruta de redireccionamiento en caso de error
-
     ),
-    (req, res) => res.status(201).json({
-        success: true,
-        message: 'user created!'
-    })
+    (req, res) => {
+        const { redirect } = req.query
+        if (redirect == "true") {
+            return res.redirect("/perfil")
+        } else {
+            return res.status(201).json({
+                success: true,
+                message: 'user created!'
+            })
+        }
+    }
 )
 
 router.get('/fail-register', (req, res) => res.status(400).json({

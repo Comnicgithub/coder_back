@@ -39,7 +39,6 @@ const deleteUser = async (id) => {
 }
 
 const update = async () => {
-    console.log("re updated")
     const user_cars = document.getElementsByClassName("user-cards")
     const item = user_cars[0]
 

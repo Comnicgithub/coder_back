@@ -7,5 +7,6 @@ export default function(req,res,next){
         genSaltSync() // defino nivel de proteccion
     )
     req.body.password = hashPassword
+    console.log("HASHG")
     return next()
 }

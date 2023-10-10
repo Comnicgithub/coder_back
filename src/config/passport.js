@@ -22,7 +22,6 @@ export default function () {
                 try {
                     let one = await Users.findOne({ mail: userName })
                     if (!one) {
-                        console.log(req.body)
                         let user = await Users.create(req.body)
                         return done(null, user)
                     }

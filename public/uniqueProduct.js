@@ -148,7 +148,7 @@ const createView = async () => {
     prodAddButton.type = "button"
 
     prodImage.alt = response.title
-    prodImage.src = `../${response.thumbnail}`
+    prodImage.src = `/public/img/${response.thumbnail}`
 
     prodPrice.textContent = ConvertPrice(response.price, ".")
     prodTitle.textContent = response.title
@@ -176,8 +176,8 @@ const createView = async () => {
             prodAddButton.textContent = "ADD TO CART"//currentAmount == 1 ? `ADD 1 PRODUCT TO CART` : `ADD ${currentAmount} PRODUCTS TO CART`
             addStockInput.value = currentAmount
         }
-
     }
+    
     addStockRestar.addEventListener("click", () => {
         add("-")
     })

@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-6 d-flex flex-column">
                     <h3>User register</h3>
-                    <form action="api/auth/register" method="POST" class="form-container">
+                    <form action="api/auth/register?redirect=true" method="POST" class="form-container" enctype="multipart/form-data">
                         <input placeholder="Nombre" type="text" class="input-form" id="first_name" name="first_name" required>
                         <input placeholder="Apellido" type="text" class="input-form" id="last_name" name="last_name" required>
                         <input placeholder="Foto de perfil" type="file" class="input-form" id="photo" name="image" required>

@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import sendMail from "../../utils/sendMail.js"
 import {config} from '../../config/config.js'
 import adminauth from "../../middlewares/adminAuth.js"
+import {UserDocumentUploader} from '../../middlewares/multer.js';
 
 import jwt from "jsonwebtoken"
 
@@ -149,6 +150,11 @@ router.get("/premium/:uid", adminauth, async (req, res, next) => {
             message: "cant change admin privileges"
         })
 
+        if (mongouser.documents.length<3) return res.json(409).json({
+            success: false,
+            message: "cant convert to premium (reason: user doesnt have documents)"
+        })
+
         mongouser.role = mongouser.role == "user" ? "premium" : "user"
 
         await mongouser.save()
@@ -165,8 +171,88 @@ router.get("/premium/:uid", adminauth, async (req, res, next) => {
     }
 })
 
-router.post("/:uid/documents", async (req, res, next) => {
+router.post("/documents", UserDocumentUploader.fields([{ name: 'dni-front', maxCount: 1 }, { name: 'dni-back', maxCount: 1 }, { name: 'irl-user-photo', maxCount: 1 }]), async (req, res, next) => {
+    console.log(req.files)
 
+    const {redirect} = req.query
+    const user = await Users.findById(req.user.id)
+
+    if (req.files == null) return res.status(400).json({
+        success: false
+    })
+
+    if (req.files["dni-front"] != null) {
+        const type = "dni-front"
+        const file = req.files[type][0]
+        const index = user.documents.findIndex(e => {
+            if (e.reference == type) {
+                return true
+            }
+        })
+
+        if (index >= 0) {
+            user.documents[index].name = file.filename
+        } else {
+            user.documents.push({
+                name: file.filename,
+                reference: type
+            })
+        }
+    }
+
+    if (req.files["dni-back"] != null) {
+        const type = "dni-back"
+        const file = req.files[type][0]
+        const index = user.documents.findIndex(e => {
+            if (e.reference == type) {
+                return true
+            }
+        })
+
+        if (index >= 0) {
+            user.documents[index].name = file.filename
+        } else {
+            user.documents.push({
+                name: file.filename,
+                reference: type
+            })
+        }
+    }
+    
+
+    if (req.files["irl-user-photo"] != null) {
+        const type = "irl-user-photo"
+        const file = req.files[type][0]
+        const index = user.documents.findIndex(e => {
+            if (e.reference == type) {
+                return true
+            }
+        })
+
+        if (index >= 0) {
+            user.documents[index].name = file.filename
+        } else {
+            user.documents.push({
+                name: file.filename,
+                reference: type
+            })
+        }
+    }
+
+    if (user.documents.length >= 3) {
+        user.verified = true
+    }
+
+    user.save()
+
+    if (redirect == "true") {
+        return res.redirect("/perfil")
+    } else {
+        return res.status(200).json({
+            success: true
+        })
+    }
+    
 })
 
 
