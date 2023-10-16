@@ -1,5 +1,6 @@
+import 'dotenv/config.js';
 
-const websiteUrl = 'http://localhost:3000'
+const websiteUrl = process.env.PORT || 3000;
 
 const checkoutButton = document.getElementById("checkoutButton")
 
