@@ -145,7 +145,8 @@ const createView = async () => {
     prodAddButton.type = "button"
 
     prodImage.alt = response.title
-    prodImage.src = response.thumbnail
+    const image = response.thumbnail.substring(0, 7) == "/public" ? response.thumbnail :`/public/img/${response.thumbnail}` 
+    prodImage.src = image
 
     prodPrice.textContent = ConvertPrice(response.price, ".")
     prodTitle.textContent = response.title

@@ -6,12 +6,12 @@ import { fileURLToPath } from 'url';
 import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(dirname(__filename));
+const __dirname = dirname(dirname(__filename, '..'));
 
 const ProductImageUploader = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      return cb(null, join(__dirname,`/img`))
+      return cb(null, join(__dirname, "..", `/public/img`))
     },
     filename: (req, file, cb) => {
       const arr = file.originalname.split(".")
@@ -45,7 +45,7 @@ const UserDocumentUploader = multer({
 })
 
 // Define la ubicación donde deseas guardar las imágenes
-const uploadDirectory = join(__dirname, 'img');
+const uploadDirectory = join(__dirname, "..", 'public', 'img');
 
 // Configura multer para guardar las imágenes en esa ubicación
 const storage = multer.diskStorage({
