@@ -34,23 +34,5 @@ const sendMail = async () => {
     }
 };
 
-// const forgotPass = async (userMail) => {
-//     try {
 
-//         const token = jwt.sign({ userMail: user.mail }, secretKey, { expiresIn: '1h' });
-
-//         const resetLink = `http://localhost:${process.env.PORT}/reset-password?token=${token}`;
-//         const info = await transport.sendMail({
-//             from: 'Nicolas Lopez <lopeznicolas055@gmail.com>',
-//             to: userMail, // Use the user's email passed as an argument
-//             subject: 'Password Reset',
-//             html: `Click <a href="${resetLink}">here</a> to reset your password.`,
-//         });
-
-//         console.log('Password reset email sent:', info.response);
-//     } catch (error) {
-//         console.error('Error sending password reset email:', error);
-//     }
-// };
-
-export default sendMail; // Export the functions individually
+export default sendMail; 

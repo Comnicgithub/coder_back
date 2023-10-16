@@ -2,29 +2,16 @@ import { Router } from "express"
 import Products from '../../dao/mongo/models/product.model.js'
 import authorization from "../../middlewares/authorization.js"
 import product_edit from "../../middlewares/product_edit.js"
+import sendMail from "../../utils/sendMail.js"
 
 import {ProductImageUploader} from "../../middlewares/multer.js"
 
 import jwt from "jsonwebtoken"
-import nodemailer from "nodemailer"
-
-import { config } from "../../config/config.js"
 
 import Users from "../../dao/mongo/models/user.model.js"
 
 const router = Router()
 
-const transport = nodemailer.createTransport({
-    service: 'gmail',
-    port: 587,
-    auth: {
-        user: config.gmail_user_app,
-        pass: config.gmail_pass_app,
-    },
-    tls: {
-        rejectUnauthorized: false,
-    },
-});
 
 router.get("/canEdit/:productId", product_edit, async (req, res, next) => {
     try {
@@ -170,7 +157,7 @@ router.delete('/:pid', authorization, async (req, res, next) => {
             if (owner != "admin") {
                 const ownerdata = await Users.findById(owner)
                 if (ownerdata != null) {
-                    await transport.sendMail({
+                    await sendMail({
                         from: process.env.GMAIL_USER_APP,
                         to: ownerdata.mail,
                         subject: 'Producto Eliminado',
