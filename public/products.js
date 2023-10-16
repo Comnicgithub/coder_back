@@ -1,6 +1,3 @@
-import 'dotenv/config.js';
-
-const websiteUrl = process.env.PORT || 3000;
 
 const urlParams = new URLSearchParams(window.location.search)
 const page = urlParams.get("page") || 1
