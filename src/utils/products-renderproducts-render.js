@@ -91,7 +91,7 @@ const updateView = async () => {
         button.addEventListener("click", async (data) => {
             console.log(sessionStorage.getItem("userCart"))
             console.log(pid)
-            const request = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}/product/${pid}/${units}`, {
+            const request = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${pid}/${units}`, {
                 method: "PUT",
                 body: JSON.stringify({units: units}),
                 headers: {

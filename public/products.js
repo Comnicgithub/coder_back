@@ -41,7 +41,7 @@ const ConvertPrice = (amount, add) => {// recibe dos valores: un numero y un tex
 const updateView = async () => {
     console.log("upd view")
     console.log("viendo la pagina:", page)
-    const req = await fetch(`${websiteUrl}/api/products?page=${page}`, { method: "GET" })
+    const req = await fetch(`/api/products?page=${page}`, { method: "GET" })
     if (req.status != 200) return
     const response = await req.json()
 
@@ -102,7 +102,7 @@ const updateView = async () => {
         button.addEventListener("click", async (data) => {
             console.log(sessionStorage.getItem("userCart"))
             console.log(pid)
-            const request = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}/product/${pid}/${units}`, {
+            const request = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${pid}/${units}`, {
                 method: "PUT",
                 body: JSON.stringify({units: units}),
                 headers: {

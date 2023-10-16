@@ -39,9 +39,9 @@ const update = async () => {
     const elementProductList = document.getElementById("productList")
     if (elementProductList == undefined) return
 
-    //const productsRequest = await fetch(`${websiteUrl}/api/products`)
-    const cartRequest = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}`)
-    const cartpriceRequest = await fetch(`${websiteUrl}/api/carts/bills/${sessionStorage.getItem("userCart")}`)
+    //const productsRequest = await fetch(`/api/products`)
+    const cartRequest = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}`)
+    const cartpriceRequest = await fetch(`/api/carts/bills/${sessionStorage.getItem("userCart")}`)
     const cartResponse = await cartRequest.json()
     const cartpriceResponse = await cartpriceRequest.json()
 
@@ -108,7 +108,7 @@ const update = async () => {
         checkoutButton.textContent = `TOTAL TO PAY ${ConvertPrice(cartpriceResponse.price, ".")}`
         console.log(productData)
         del.addEventListener("click", async () => {
-            const req = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${e.units}`, {
+            const req = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${e.units}`, {
                 method: "DELETE"
             })
             const response = await req.json()
@@ -120,7 +120,7 @@ const update = async () => {
         })
 
         remove.addEventListener("click", async () => {
-            const req = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
+            const req = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
                 method: "DELETE"
             })
             const response = await req.json()
@@ -132,7 +132,7 @@ const update = async () => {
         })
 
         add.addEventListener("click", async () => {
-            const req = await fetch(`${websiteUrl}/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
+            const req = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
                 method: "PUT"
             })
             const response = await req.json()

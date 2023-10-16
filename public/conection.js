@@ -27,7 +27,7 @@ socket.on("userCartId", (cartId) => {
 
 socket.emit("getCartContent", sessionStorage.getItem("userCart"))
 if (sessionStorage.getItem("userCart") == undefined) {
-    const req = fetch("http://localhost:3000/api/carts", {
+    const req = fetch("/api/carts", {
         method: "POST"
     })
     .then(res => res.json())
