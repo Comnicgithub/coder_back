@@ -96,7 +96,7 @@ const update = async () => {
         total.classList.add("totalText")
 
         img.classList.add("cartImageProduct")
-        img.src = productData.thumbnail.substring(0, 7) == "/public" ? product.thumbnail :` /public/img/${product.thumbnail}`
+        img.src = productData.thumbnail
 
         const calc = ConvertPrice(e.units*productData.price, ".")
         title.textContent = productData.title
