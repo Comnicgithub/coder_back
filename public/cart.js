@@ -39,7 +39,6 @@ const update = async () => {
     const elementProductList = document.getElementById("productList")
     if (elementProductList == undefined) return
 
-    //const productsRequest = await fetch(`/api/products`)
     const cartRequest = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}`)
     const cartpriceRequest = await fetch(`/api/carts/bills/${sessionStorage.getItem("userCart")}`)
     const cartResponse = await cartRequest.json()
@@ -96,7 +95,7 @@ const update = async () => {
         total.classList.add("totalText")
 
         img.classList.add("cartImageProduct")
-        img.src = productData.thumbnail.substring(0, 7) == "/public" ? response.thumbnail :`/public/img/${response.thumbnail}`
+        img.src = productData.thumbnail.substring(0,7) == "/public" ? productData.thumbnail : `/public/img/${productData.thumbnail}`
 
         const calc = ConvertPrice(e.units*productData.price, ".")
         title.textContent = productData.title
@@ -132,7 +131,7 @@ const update = async () => {
         })
 
         add.addEventListener("click", async () => {
-            const req = await fetch(`/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
+            const req = await fetch(`$/api/carts/${sessionStorage.getItem("userCart")}/product/${productData._id}/${1}`, {
                 method: "PUT"
             })
             const response = await req.json()
