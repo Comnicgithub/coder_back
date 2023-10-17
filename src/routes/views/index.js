@@ -155,7 +155,7 @@ router.get('/products', async (req, res, next) => {
 
         const formattedProducts = products.docs.map(product => ({
             title: product.title,
-            thumbnail: product.thumbnail,
+            thumbnail: product.thumbnail.substring(0, 7) == "/public" ? product.thumbnail : `/public/img/${product.thumbnail}`,
             price: product.price,
             link: `/products/${product._id}`
         }));
